@@ -1,8 +1,18 @@
 package Main;
 
-public class FileIO {
-    private String fileLocation = null; //todo: assign default file location.
 
+import java.io.IOException;
+import java.nio.file.*;
+import java.util.Random;
+import java.util.stream.Stream;
+
+public class FileIO {
+
+    private String fileName = "MealsTest.txt";//TODO add getters and setters.
+
+    private Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
+
+    //adding and removeing from file are basicaly the same thing.
     public void addToFile(String meal){
         //todo: add method to add meals to file.
     }
@@ -11,23 +21,25 @@ public class FileIO {
         //todo: add method to remove meals from file.
     }
 
-    public String readRandObj(){
-        //todo: add method to read and return a random object from the file.
+    public  Object readRandObj(){
+        Object[] mealArray = readAllObj();
+        Random random = new Random();
+        if (mealArray != null) {
+            int randIndex = random.nextInt(mealArray.length - 1);
+            return mealArray[randIndex];
+        }
         return null;
     }
 
-    public String[] readAllObj(){
-        //todo: add method to read and return all objects in file as a array.
-        return null;
+    public Object[] readAllObj() {
+
+        try{
+            Stream<String> mealStream = Files.lines(filePath);
+            return mealStream.toArray();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
     }
-
-    public void setFileLocation(String fileLocation) {
-        this.fileLocation = fileLocation;
-    }
-
-    public String getFileLocation() {
-        return fileLocation;
-    }
-
-
 }
