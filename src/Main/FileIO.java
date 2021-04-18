@@ -15,14 +15,19 @@ public class FileIO {
     private String fileName = "MealsTest.txt";//TODO add getters and setters.
     private Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
 
-    public void addToFile(String meal){
+    public String addToFile(String meal){
         //todo: add method to add meals to file.
         //Harrison 04/16/2021
 
         String mealReturn;
 
         //Create file reader and writer
-        Scanner reader = new Scanner(new FileReader(fileLocation));
+        Scanner reader = null;
+        try {
+            reader = new Scanner(new FileReader(fileName));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
 
         //TROUBLESHOOTING: Read lines to make sure meal is not already in file
@@ -68,6 +73,7 @@ public class FileIO {
 
     public void removeFromFile(String meal){
         //todo: add method to remove meals from file.
+
     }
 
     public  Object readRandObj(){

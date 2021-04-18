@@ -5,10 +5,6 @@ import java.util.Arrays;
 public class MealGeneratorApp {
 
     public static void main(String[] args) {
-
-        System.out.printf("%s\n",FileIO.addToFile("Foie Gras"));
-
-
         FileIO fileIO = new FileIO();
         System.out.println(Arrays.toString(fileIO.readAllObj()));
         System.out.println(fileIO.readRandObj());
@@ -17,6 +13,8 @@ public class MealGeneratorApp {
         for (Object[] objects : mealDayArray) {
             System.out.println(Arrays.toString(objects));
         }
+
+        System.out.println(fileIO.addToFile("Foie Gras"));
     }
     private static void mainMenu() {
         //TODO: create main menu
