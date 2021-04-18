@@ -12,7 +12,7 @@ public class FileIO {
 
     private Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
 
-    //adding and removeing from file are basicaly the same thing.
+    //adding and removing from file are basically the same thing removing is just harder.
     public void addToFile(String meal){
         //todo: add method to add meals to file.
     }
@@ -25,7 +25,7 @@ public class FileIO {
         Object[] mealArray = readAllObj();
         Random random = new Random();
         if (mealArray != null) {
-            int randIndex = random.nextInt(mealArray.length - 1);
+            int randIndex = random.nextInt(mealArray.length);
             return mealArray[randIndex];
         }
         return null;
