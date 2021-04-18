@@ -14,13 +14,16 @@ public class FileIO {
     private String fileName = "MealsTest.txt";//TODO add getters and setters.
     private Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
 
+    //Temporary file for remove from file\
+    private String tempFileName = "temp.txt";
+    private Path tempFilePath = Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + tempFileName);
+
     public String addToFile(String meal){
-        //todo: add method to add meals to file.
         //Harrison 04/16/2021
 
         String mealReturn;
 
-        //Create file reader and writer
+        //Create file reader
         Scanner reader = null;
         try {
             reader = new Scanner(new FileReader(String.valueOf(filePath)));
@@ -41,6 +44,7 @@ public class FileIO {
             }
         }
 
+        //if meal is in file, ignore, else add to file. Create return value
         if (!mealInFile)
         {
             try {
@@ -65,9 +69,40 @@ public class FileIO {
 
     }
 
-    public void removeFromFile(String meal){
-        //todo: add method to remove meals from file.
+    public String fileToString(String filePath) throws FileNotFoundException {
+        String input = null;
+        Scanner scanner = new Scanner(new File(filePath));
+        StringBuffer sb = new StringBuffer();
+        while (scanner.hasNextLine())
+        {
+            input = scanner.nextLine();
+            if (scanner.hasNextLine())
+            {
+                sb.append(input + "\n");
+            }
+            else
+            {
+                sb.append(input);
+            }
+        }
 
+        return sb.toString();
+    }
+
+    public String removeFromFile(String meal) throws FileNotFoundException {
+        //todo: add method to remove meals from file.
+        //Harrison 04/18/2021
+
+        String mealFileText = fileToString(String.valueOf(filePath)).
+                replaceAll(meal + "\n", "").
+                replaceAll(meal,"").trim();
+
+        PrintWriter pw = new PrintWriter(String.valueOf(filePath));
+
+        pw.append(mealFileText);
+        pw.flush();
+
+        return "Meal Removed from list";
     }
 
     public  Object readRandObj(){
