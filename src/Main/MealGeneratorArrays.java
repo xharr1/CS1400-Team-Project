@@ -48,7 +48,7 @@ public class MealGeneratorArrays {
         Object[] mealArray = fileIO.readAllObj();
 
         ArrayList<Object> mealArrayList = new ArrayList<>(Arrays.asList(mealArray));
-        System.out.println((int)(Math.ceil(((test.lengthOfMonth() + test.getDayOfWeek().getValue()) / (double)7))));
+//        System.out.println((int)(Math.ceil(((test.lengthOfMonth() + test.getDayOfWeek().getValue()) / (double)7))));
 
         Object[][] mealMonth = new Object[(int)(Math.ceil(((test.lengthOfMonth() + test.getDayOfWeek().getValue()) / (double)7)))][7];
         Arrays.fill(mealMonth[0], 0);

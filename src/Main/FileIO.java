@@ -58,11 +58,11 @@ public class FileIO {
                 System.out.println("An error occured");
                 e.printStackTrace();
             }
-            mealReturn = "Meal added to list";
+            mealReturn = "Meal added to list\n\n";
         }
         else
         {
-            mealReturn = "Meal is already in list.";
+            mealReturn = "Meal is already in list\n\n";
         }
 
         return mealReturn;
@@ -102,7 +102,7 @@ public class FileIO {
         pw.append(mealFileText);
         pw.flush();
 
-        return "Meal Removed from list";
+        return "Meal Removed from list\n\n";
     }
 
     public  Object readRandObj(){
