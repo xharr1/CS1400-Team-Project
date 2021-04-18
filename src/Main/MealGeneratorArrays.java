@@ -1,9 +1,7 @@
 package Main;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Random;
+import java.time.LocalDate;
+import java.util.*;
 
 public class MealGeneratorArrays {
     public Object[][] genArray(int days){
@@ -38,11 +36,37 @@ public class MealGeneratorArrays {
 
         return mealArrayFinal;
     }
-    public Object[][] genArray(int month, int day){
+    public Object[][] genArray(int month, int year){
         //todo: create method to generate a array with meals for each day of the supplied month.(maybe try to avoid repetition?)
-        return null;
+        FileIO fileIO = new FileIO();
+        Random random = new Random();
+
+        LocalDate test = LocalDate.of(year,month,1);
+
+        int days = (test.lengthOfMonth() - (7 - test.getDayOfWeek().getValue()));
+
+        Object[] mealArray = fileIO.readAllObj();
+
+        ArrayList<Object> mealArrayList = new ArrayList<>(Arrays.asList(mealArray));
+        System.out.println((int)(Math.ceil(((test.lengthOfMonth() + test.getDayOfWeek().getValue()) / (double)7))));
+
+        Object[][] mealMonth = new Object[(int)(Math.ceil(((test.lengthOfMonth() + test.getDayOfWeek().getValue()) / (double)7)))][7];
+        Arrays.fill(mealMonth[0], 0);
+        for (int i = test.getDayOfWeek().getValue(); i < 7; i++){
+            int randIndex = random.nextInt(mealArrayList.size());
+            mealMonth[0][i] = mealArrayList.remove(randIndex);
+        }
+
+        Object[][] withoutStart = genArray(days);
+        for (int i = 1; i < mealMonth.length; i++){
+            for (int j = 0; j < 7; j++){
+                mealMonth[i][j] = withoutStart[i - 1][j];
+            }
+        }
+
+        return mealMonth;
     }
-    public Object[][] genArray(String month, int day){
+    public Object[][] genArray(String month, int year){
         int intMonth;
 
         month = month.toLowerCase(Locale.ROOT);
@@ -87,6 +111,6 @@ public class MealGeneratorArrays {
             default:
                 intMonth = 0;
         }
-        return genArray(intMonth, day);
+        return genArray(intMonth, year);
     }
 }
