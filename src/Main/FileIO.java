@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 public class FileIO {
 
-    private String fileLocation = "C:\\Users\\Harrison\\Desktop\\mealTest\\MealPlanner.txt"; //todo: assign default file location.
     private String fileName = "MealsTest.txt";//TODO add getters and setters.
     private Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
 
@@ -29,29 +28,24 @@ public class FileIO {
             e.printStackTrace();
         }
 
-
-        //TROUBLESHOOTING: Read lines to make sure meal is not already in file
+        //Read lines to make sure meal is not already in file
         boolean mealInFile = false;
         String mealLine;
         while (reader.hasNextLine() && !mealInFile)
         {
-            mealInFile = reader.nextLine().indexOf(meal) > 0;
-//            mealLine = reader.nextLine();
-/*            if (mealLine.equals(meal))
+//            mealInFile = reader.nextLine().indexOf(meal) > 0;
+            mealLine = reader.nextLine();
+            if (mealLine.equals(meal))
             {
                 mealInFile = true;
-                System.out.print(mealInFile);
-
-            }*/
+            }
         }
-
-
 
         if (!mealInFile)
         {
             try {
-                FileWriter writer = new FileWriter(fileLocation, true);
-                writer.write(meal + "\n");
+                FileWriter writer = new FileWriter(String.valueOf(filePath), true);
+                writer.write("\n" + meal);
                 writer.close();
 
             }
