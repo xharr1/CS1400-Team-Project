@@ -8,6 +8,11 @@ public class MealGeneratorApp {
         FileIO fileIO = new FileIO();
         System.out.println(Arrays.toString(fileIO.readAllObj()));
         System.out.println(fileIO.readRandObj());
+        MealGeneratorArrays mealGeneratorArrays = new MealGeneratorArrays();
+        Object[][] mealDayArray = mealGeneratorArrays.genArray(50);
+        for (Object[] objects : mealDayArray) {
+            System.out.println(Arrays.toString(objects));
+        }
     }
     private static void mainMenu() {
         //TODO: create main menu
