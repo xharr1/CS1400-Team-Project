@@ -1,14 +1,21 @@
 package Main;
 
+
+import java.io.IOException;
+import java.nio.file.*;
+import java.util.Random;
+import java.util.stream.Stream;
+
 import java.io.*;
 import java.util.Scanner;
 
 public class FileIO {
+
     private String fileLocation = "C:\\Users\\Harrison\\Desktop\\mealTest\\MealPlanner.txt"; //todo: assign default file location.
-    private File mealFile = new File(fileLocation); //todo: add filename
+    private String fileName = "MealsTest.txt";//TODO add getters and setters.
+    private Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
 
-
-    public String addToFile(String meal) throws FileNotFoundException, IOException {
+    public void addToFile(String meal){
         //todo: add method to add meals to file.
         //Harrison 04/16/2021
 
@@ -63,23 +70,25 @@ public class FileIO {
         //todo: add method to remove meals from file.
     }
 
-    public String readRandObj(){
-        //todo: add method to read and return a random object from the file.
+    public  Object readRandObj(){
+        Object[] mealArray = readAllObj();
+        Random random = new Random();
+        if (mealArray != null) {
+            int randIndex = random.nextInt(mealArray.length);
+            return mealArray[randIndex];
+        }
         return null;
     }
 
-    public String[] readAllObj(){
-        //todo: add method to read and return all objects in file as a array.
-        return null;
+    public Object[] readAllObj() {
+
+        try{
+            Stream<String> mealStream = Files.lines(filePath);
+            return mealStream.toArray();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
     }
-
-    public void setFileLocation(String fileLocation) {
-        this.fileLocation = fileLocation;
-    }
-
-    public String getFileLocation() {
-        return fileLocation;
-    }
-
-
 }
