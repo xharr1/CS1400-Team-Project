@@ -24,7 +24,7 @@ public class FileIO {
         //Create file reader and writer
         Scanner reader = null;
         try {
-            reader = new Scanner(new FileReader(fileName));
+            reader = new Scanner(new FileReader(String.valueOf(filePath)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
