@@ -47,7 +47,7 @@ public class MealGeneratorApp {
                     subMenuSelection = Integer.parseInt(input.nextLine());
                     switch (subMenuSelection)
                     {
-                        case 1: //todo: add formating of printed plan
+                        case 1:
                             System.out.print("Enter month as number (1-12) or string (January-December): ");
                             strMonth = input.nextLine();
                             System.out.print("Enter year: ");
@@ -60,21 +60,33 @@ public class MealGeneratorApp {
                                     intMonth = Integer.parseInt(strMonth);
                                 }
                             }
+                            if (!(intMonth > 0 && intMonth < 13)) {
+                                System.out.println("Invalid Month!");
+                                break;
+                            }
                             if (intMonth != 0)
                             {
-                                System.out.println(Arrays.deepToString(mealGeneratorArrays.genArray(intMonth, year)));
+                                Object[][] mealPlanArray = mealGeneratorArrays.genArray(intMonth, year);
+                                for (Object[] objects : mealPlanArray) {
+                                    System.out.println(Arrays.toString(objects));
+                                }
                             }
                             else
                             {
-                                System.out.println(Arrays.deepToString(mealGeneratorArrays.genArray(strMonth, year)));
+                                Object[][] mealPlanArray = mealGeneratorArrays.genArray(strMonth, year);
+                                for (Object[] objects : mealPlanArray) {
+                                    System.out.println(Arrays.toString(objects));
+                                }
                             }
                             System.out.println();
                             break;
-                        case 2: //todo: add formating of printed plan
+                        case 2:
                             System.out.print("Enter number of days for meal plan: ");
                             days = Integer.parseInt(input.nextLine());
-                            System.out.println(Arrays.toString(mealGeneratorArrays.genArray(days)));
-                            System.out.println();
+                            Object[][] mealPlanArray = mealGeneratorArrays.genArray(days);
+                            for (Object[] objects : mealPlanArray) {
+                                System.out.println(Arrays.toString(objects));
+                            }
                             break;
                         case 0:
                             break;

@@ -63,7 +63,6 @@ public class MealGeneratorArrays {
                 mealMonth[i][j] = withoutStart[i - 1][j];
             }
         }
-
         return mealMonth;
     }
     public Object[][] genArray(String month, int year){

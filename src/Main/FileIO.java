@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class FileIO {
 
-    private String fileName = "MealsTest.txt";//TODO add getters and setters.
+    private String fileName = "MealsTest.txt";
     private Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
 
     public String addToFile(String meal){
