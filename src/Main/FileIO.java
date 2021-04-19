@@ -14,10 +14,6 @@ public class FileIO {
     private String fileName = "MealsTest.txt";//TODO add getters and setters.
     private Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
 
-    //Temporary file for remove from file\
-    private String tempFileName = "temp.txt";
-    private Path tempFilePath = Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + tempFileName);
-
     public String addToFile(String meal){
         //Harrison 04/16/2021
 
