@@ -108,7 +108,8 @@ public class MealGeneratorArrays {
                 intMonth = 12;
                 break;
             default:
-                intMonth = 0;
+                System.out.println("Invalid month!");
+                return null;
         }
         return genArray(intMonth, year);
     }

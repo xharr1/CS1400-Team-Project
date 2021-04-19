@@ -60,7 +60,7 @@ public class MealGeneratorApp {
                                     intMonth = Integer.parseInt(strMonth);
                                 }
                             }
-                            if (!(intMonth > 0 && intMonth < 13)) {
+                            if (!(intMonth > -1 && intMonth < 13)) {
                                 System.out.println("Invalid Month!");
                                 break;
                             }
@@ -71,9 +71,15 @@ public class MealGeneratorApp {
                                     System.out.println(Arrays.toString(objects));
                                 }
                             }
-                            else
-                            {
+                            else if (strMonth.equals("0")){
+                                System.out.println("Invalid Month!");
+                                break;
+                            }
+                            else {
                                 Object[][] mealPlanArray = mealGeneratorArrays.genArray(strMonth, year);
+                                if (mealPlanArray == null){
+                                    break;
+                                }
                                 for (Object[] objects : mealPlanArray) {
                                     System.out.println(Arrays.toString(objects));
                                 }
