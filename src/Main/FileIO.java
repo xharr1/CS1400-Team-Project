@@ -101,6 +101,10 @@ public class FileIO {
         return "Meal Removed from list\n\n";
     }
 
+    public Object[][] replaceMeal(Object[][] mealArray, String meal) {
+        return null;
+    }
+
     public  Object readRandObj(){
         Object[] mealArray = readAllObj();
         Random random = new Random();

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class MealGeneratorApp {
-
+    //Harrison 04/18/2021
     public static void main(String[] args) {
         FileIO fileIO = new FileIO();
         Scanner input = new Scanner(System.in);
@@ -112,6 +112,9 @@ public class MealGeneratorApp {
                 case 4:
                     System.out.print(Arrays.deepToString(fileIO.readAllObj()) + "\n\n");
                     break;
+                case 5:
+
+                    break;
                 case 0:
                     break;
                 default:
@@ -120,22 +123,6 @@ public class MealGeneratorApp {
             }
         } while (selection != 0);
 
-        /*System.out.println(Arrays.toString(fileIO.readAllObj()));
-        System.out.println(fileIO.readRandObj());
-        MealGeneratorArrays mealGeneratorArrays = new MealGeneratorArrays();
-        Object[][] mealDayArray = mealGeneratorArrays.genArray(50);
-        for (Object[] objects : mealDayArray) {
-            System.out.println(Arrays.toString(objects));
-        }
-
-        try {
-            System.out.println(fileIO.removeFromFile("Foie Gras"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(fileIO.addToFile("Foie Gras"));
-        System.out.println(fileIO.addToFile("Chicken Parm"));*/
     }
     private static void mainMenu() {
         //TODO: create main menu
