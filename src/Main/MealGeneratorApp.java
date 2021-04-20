@@ -91,6 +91,9 @@ public class MealGeneratorApp {
                 case 4:
                     System.out.print(Arrays.deepToString(fileIO.readAllObj()) + "\n\n");
                     break;
+                case 5:
+
+                    break;
                 case 0:
                     break;
                 default:
