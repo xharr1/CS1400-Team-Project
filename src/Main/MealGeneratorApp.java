@@ -61,18 +61,22 @@ public class MealGeneratorApp {
                                 }
                             }
                             if (!(intMonth > -1 && intMonth < 13)) {
-                                System.out.println("Invalid Month!");
+                                System.out.println("Invalid Month!\n");
                                 break;
                             }
                             if (intMonth != 0)
                             {
                                 Object[][] mealPlanArray = mealGeneratorArrays.genArray(intMonth, year);
-                                for (Object[] objects : mealPlanArray) {
-                                    System.out.println(Arrays.toString(objects));
-                                }
+                                System.out.println(Arrays.deepToString(mealPlanArray).
+                                        replaceAll("], ", "\n").
+                                        replaceAll("\\[", "").
+                                        replaceAll("]]", "").
+                                        replaceAll("\\[", "").
+                                        replaceAll(", ", "\t"));
+                                System.out.println();
                             }
                             else if (strMonth.equals("0")){
-                                System.out.println("Invalid Month!");
+                                System.out.println("Invalid Month!\n");
                                 break;
                             }
                             else {
@@ -81,7 +85,7 @@ public class MealGeneratorApp {
                                     break;
                                 }
                                 for (Object[] objects : mealPlanArray) {
-                                    System.out.println(Arrays.toString(objects));
+                                    System.out.println(Arrays.deepToString(objects));
                                 }
                             }
                             System.out.println();
@@ -90,9 +94,13 @@ public class MealGeneratorApp {
                             System.out.print("Enter number of days for meal plan: ");
                             days = Integer.parseInt(input.nextLine());
                             Object[][] mealPlanArray = mealGeneratorArrays.genArray(days);
-                            for (Object[] objects : mealPlanArray) {
-                                System.out.println(Arrays.toString(objects));
-                            }
+                            System.out.println(Arrays.deepToString(mealPlanArray).
+                                    replaceAll("], ", "\n").
+                                    replaceAll("\\[", "").
+                                    replaceAll("]]", "").
+                                    replaceAll("\\[", "").
+                                    replaceAll(", ", "\t"));
+                            System.out.println();
                             break;
                         case 0:
                             break;
@@ -102,7 +110,7 @@ public class MealGeneratorApp {
                     }
                     break;
                 case 4:
-                    System.out.print(Arrays.toString(fileIO.readAllObj()) + "\n\n");
+                    System.out.print(Arrays.deepToString(fileIO.readAllObj()) + "\n\n");
                     break;
                 case 0:
                     break;
