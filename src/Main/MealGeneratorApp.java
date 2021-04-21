@@ -41,32 +41,54 @@ public class MealGeneratorApp {
                     }
                     break;
                 case 3:
-                    System.out.println();
-                    generatorMenu();
-                    System.out.print("Selection: ");
-                    subMenuSelection = Integer.parseInt(input.nextLine());
-                    switch (subMenuSelection)
-                    {
-                        case 1:
-                            System.out.print("Enter month as number (1-12) or string (January-December): ");
-                            strMonth = input.nextLine();
-                            System.out.print("Enter year: ");
-                            year = Integer.parseInt(input.nextLine());
-                            char[] chars = strMonth.toCharArray();
-                            for (char c: chars)
-                            {
-                                if (Character.isDigit(c))
-                                {
-                                    intMonth = Integer.parseInt(strMonth);
+                    do {
+                        System.out.println();
+                        generatorMenu();
+                        System.out.print("Selection: ");
+                        subMenuSelection = Integer.parseInt(input.nextLine());
+                        switch (subMenuSelection) {
+                            case 1:
+                                System.out.print("Enter month as number (1-12) or string (January-December): ");
+                                strMonth = input.nextLine();
+                                System.out.print("Enter year: ");
+                                year = Integer.parseInt(input.nextLine());
+                                char[] chars = strMonth.toCharArray();
+                                for (char c : chars) {
+                                    if (Character.isDigit(c)) {
+                                        intMonth = Integer.parseInt(strMonth);
+                                    }
                                 }
-                            }
-                            if (!(intMonth > -1 && intMonth < 13)) {
-                                System.out.println("Invalid Month!\n");
+                                if (!(intMonth > -1 && intMonth < 13)) {
+                                    System.out.println("Invalid Month!\n");
+                                    break;
+                                }
+                                if (intMonth != 0) {
+                                    Object[][] mealPlanArray = mealGeneratorArrays.genArray(intMonth, year);
+                                    System.out.println(Arrays.deepToString(mealPlanArray).
+                                            replaceAll("], ", "\n").
+                                            replaceAll("\\[", "").
+                                            replaceAll("]]", "").
+                                            replaceAll("\\[", "").
+                                            replaceAll(", ", "\t"));
+                                    System.out.println();
+                                } else if (strMonth.equals("0")) {
+                                    System.out.println("Invalid Month!\n");
+                                    break;
+                                } else {
+                                    Object[][] mealPlanArray = mealGeneratorArrays.genArray(strMonth, year);
+                                    if (mealPlanArray == null) {
+                                        break;
+                                    }
+                                    for (Object[] objects : mealPlanArray) {
+                                        System.out.println(Arrays.deepToString(objects));
+                                    }
+                                }
+                                System.out.println();
                                 break;
-                            }
-                            if (intMonth != 0)
-                            {
-                                Object[][] mealPlanArray = mealGeneratorArrays.genArray(intMonth, year);
+                            case 2:
+                                System.out.print("Enter number of days for meal plan: ");
+                                days = Integer.parseInt(input.nextLine());
+                                Object[][] mealPlanArray = mealGeneratorArrays.genArray(days);
                                 System.out.println(Arrays.deepToString(mealPlanArray).
                                         replaceAll("], ", "\n").
                                         replaceAll("\\[", "").
@@ -74,46 +96,18 @@ public class MealGeneratorApp {
                                         replaceAll("\\[", "").
                                         replaceAll(", ", "\t"));
                                 System.out.println();
-                            }
-                            else if (strMonth.equals("0")){
-                                System.out.println("Invalid Month!\n");
                                 break;
-                            }
-                            else {
-                                Object[][] mealPlanArray = mealGeneratorArrays.genArray(strMonth, year);
-                                if (mealPlanArray == null){
-                                    break;
-                                }
-                                for (Object[] objects : mealPlanArray) {
-                                    System.out.println(Arrays.deepToString(objects));
-                                }
-                            }
-                            System.out.println();
-                            break;
-                        case 2:
-                            System.out.print("Enter number of days for meal plan: ");
-                            days = Integer.parseInt(input.nextLine());
-                            Object[][] mealPlanArray = mealGeneratorArrays.genArray(days);
-                            System.out.println(Arrays.deepToString(mealPlanArray).
-                                    replaceAll("], ", "\n").
-                                    replaceAll("\\[", "").
-                                    replaceAll("]]", "").
-                                    replaceAll("\\[", "").
-                                    replaceAll(", ", "\t"));
-                            System.out.println();
-                            break;
-                        case 0:
-                            break;
-                        default:
-                            System.out.println("Invalid input, select another value");
-                            break;
+                            case 0:
+                                break;
+                            default:
+                                System.out.println("Invalid input, select another value");
+                                break;
+                        }
                     }
+                    while (subMenuSelection != 0);
                     break;
                 case 4:
                     System.out.print(Arrays.deepToString(fileIO.readAllObj()) + "\n\n");
-                    break;
-                case 5:
-
                     break;
                 case 0:
                     break;
