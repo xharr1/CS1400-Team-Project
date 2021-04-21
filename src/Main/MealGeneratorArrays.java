@@ -24,7 +24,7 @@ public class MealGeneratorArrays {
             }
         }
         if (!(days % rowSize == 0)){
-            Arrays.fill(mealArrayFinal[mealArrayFinal.length - 1], (Object)0);
+            Arrays.fill(mealArrayFinal[mealArrayFinal.length - 1], 0);
             for (int i = 0; i < days - (j * rowSize); i++ ){
                 int randIndex = random.nextInt(mealArrayList.size());
                 mealArrayFinal[j][i] = mealArrayList.remove(randIndex);
@@ -37,7 +37,6 @@ public class MealGeneratorArrays {
         return mealArrayFinal;
     }
     public Object[][] genArray(int month, int year){
-        //todo: create method to generate a array with meals for each day of the supplied month.(maybe try to avoid repetition?)
         FileIO fileIO = new FileIO();
         Random random = new Random();
 
@@ -48,7 +47,6 @@ public class MealGeneratorArrays {
         Object[] mealArray = fileIO.readAllObj();
 
         ArrayList<Object> mealArrayList = new ArrayList<>(Arrays.asList(mealArray));
-//        System.out.println((int)(Math.ceil(((test.lengthOfMonth() + test.getDayOfWeek().getValue()) / (double)7))));
 
         Object[][] mealMonth = new Object[(int)(Math.ceil(((test.lengthOfMonth() + test.getDayOfWeek().getValue()) / (double)7)))][7];
         Arrays.fill(mealMonth[0], 0);
@@ -59,9 +57,7 @@ public class MealGeneratorArrays {
 
         Object[][] withoutStart = genArray(days);
         for (int i = 1; i < mealMonth.length; i++){
-            for (int j = 0; j < 7; j++){
-                mealMonth[i][j] = withoutStart[i - 1][j];
-            }
+            System.arraycopy(withoutStart[i - 1], 0, mealMonth[i], 0, 7);
         }
         return mealMonth;
     }
@@ -70,46 +66,23 @@ public class MealGeneratorArrays {
 
         month = month.toLowerCase(Locale.ROOT);
 
-        switch (month){
-            case "january" :
-                intMonth = 1;
-                break;
-            case "february":
-                intMonth = 2;
-                break;
-            case "march":
-                intMonth = 3;
-                break;
-            case "april":
-                intMonth = 4;
-                break;
-            case "may":
-                intMonth = 5;
-                break;
-            case "june":
-                intMonth = 6;
-                break;
-            case "july":
-                intMonth = 7;
-                break;
-            case "august":
-                intMonth = 8;
-                break;
-            case "september":
-                intMonth = 9;
-                break;
-            case "october":
-                intMonth = 10;
-                break;
-            case "november":
-                intMonth = 11;
-                break;
-            case "december":
-                intMonth = 12;
-                break;
-            default:
+        switch (month) {
+            case "january" -> intMonth = 1;
+            case "february" -> intMonth = 2;
+            case "march" -> intMonth = 3;
+            case "april" -> intMonth = 4;
+            case "may" -> intMonth = 5;
+            case "june" -> intMonth = 6;
+            case "july" -> intMonth = 7;
+            case "august" -> intMonth = 8;
+            case "september" -> intMonth = 9;
+            case "october" -> intMonth = 10;
+            case "november" -> intMonth = 11;
+            case "december" -> intMonth = 12;
+            default -> {
                 System.out.println("Invalid month!");
                 return null;
+            }
         }
         return genArray(intMonth, year);
     }
