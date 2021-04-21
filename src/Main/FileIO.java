@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 public class FileIO {
 
-    private String fileName = "MealsTest.txt";
-    private Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
+    private final String fileName = "MealsTest.txt";
+    private final Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
 
     public String addToFile(String meal){
         //Harrison 04/16/2021
@@ -51,7 +51,7 @@ public class FileIO {
             }
             catch (IOException e)
             {
-                System.out.println("An error occured");
+                System.out.println("An error occurred");
                 e.printStackTrace();
             }
             mealReturn = "Meal added to list\n\n";
@@ -66,15 +66,15 @@ public class FileIO {
     }
 
     public String fileToString(String filePath) throws FileNotFoundException {
-        String input = null;
+        String input;
         Scanner scanner = new Scanner(new File(filePath));
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (scanner.hasNextLine())
         {
             input = scanner.nextLine();
             if (scanner.hasNextLine())
             {
-                sb.append(input + "\n");
+                sb.append(input).append("\n");
             }
             else
             {
@@ -86,7 +86,6 @@ public class FileIO {
     }
 
     public String removeFromFile(String meal) throws FileNotFoundException {
-        //todo: add method to remove meals from file.
         //Harrison 04/18/2021
 
         String mealFileText = fileToString(String.valueOf(filePath)).
