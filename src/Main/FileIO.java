@@ -3,19 +3,21 @@ package Main;
 
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Stream;
 
 import java.io.*;
-import java.util.Scanner;
 
 public class FileIO {
 
     private final String fileName = "MealsTest.txt";
+
+    public Path getFilePath() {
+        return filePath;
+    }
+
     private final Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
-    private static ArrayList<Object> mealArray = new ArrayList<Object>();
+    private static ArrayList<Object> mealArray = new ArrayList<>();
 
     public String addToFile(String meal){
         //Harrison 04/16/2021
@@ -27,13 +29,14 @@ public class FileIO {
         try {
             reader = new Scanner(new FileReader(String.valueOf(filePath)));
         } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
             e.printStackTrace();
         }
 
         //Read lines to make sure meal is not already in file
         boolean mealInFile = false;
         String mealLine;
-        while (reader.hasNextLine() && !mealInFile)
+        while ((reader != null && reader.hasNextLine()) && !mealInFile)
         {
 //            mealInFile = reader.nextLine().indexOf(meal) > 0;
             mealLine = reader.nextLine();
@@ -102,7 +105,7 @@ public class FileIO {
             e.printStackTrace();
         }
 
-        pw.append(mealFileText);
+        Objects.requireNonNull(pw).append(mealFileText);
         pw.flush();
 
         return "Meal Removed from list\n\n";

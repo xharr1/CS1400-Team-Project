@@ -1,13 +1,18 @@
 package Main;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class MealGeneratorApp {
     //Harrison 04/18/2021
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         FileIO fileIO = new FileIO();
         Scanner input = new Scanner(System.in);
+        MealGeneratorArrays mealGeneratorArrays = new MealGeneratorArrays();
 
         int selection;
         int subMenuSelection;
@@ -16,9 +21,18 @@ public class MealGeneratorApp {
         int intMonth = 0;
         int year;
         int days;
-
-        MealGeneratorArrays mealGeneratorArrays = new MealGeneratorArrays();
-
+        //if the meal file does not exist, create it.
+        if (!Files.exists(fileIO.getFilePath())){
+            try{
+                Files.createFile(fileIO.getFilePath());
+            }
+            catch (IOException e){
+                System.out.printf("Could not create file\n" +
+                        "check that the program has access to %S\n" +
+                        "and that the directory exists.\n", fileIO.getFilePath());
+                throw e;
+            }
+        }
         do {
             mainMenu();
             System.out.print("Selection: ");
