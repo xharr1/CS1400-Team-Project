@@ -3,6 +3,8 @@ package Main;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -13,6 +15,7 @@ public class FileIO {
 
     private final String fileName = "MealsTest.txt";
     private final Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
+    private static ArrayList<Object> mealArray = new ArrayList<Object>();
 
     public String addToFile(String meal){
         //Harrison 04/16/2021
@@ -109,13 +112,6 @@ public class FileIO {
         return null;
     }
 
-    public  Object readRandObj(){
-        Object[] mealArray = readAllObj();
-        Random random = new Random();
-        int randIndex = random.nextInt(mealArray.length);
-        return mealArray[randIndex];
-    }
-
     public Object[] readAllObj() {
         //method to read all items in the file.
         //is it worth it to convert this to a array list?
@@ -127,5 +123,15 @@ public class FileIO {
             e.printStackTrace();
             return null;
         }
+    }
+    public Object returnRandomObj(){
+        Random random = new Random();
+        //check if arraylist is empty, if it is refill it.
+        if (mealArray.isEmpty()){
+            mealArray = new ArrayList<>(Arrays.asList(readAllObj()));
+        }
+        //return a random object, removing it from the arraylist to avoid meal repetition.
+        int randObject = random.nextInt(mealArray.size());
+        return mealArray.remove(randObject);
     }
 }

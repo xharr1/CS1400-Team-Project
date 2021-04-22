@@ -2,27 +2,17 @@ package Main;
 
 import java.time.LocalDate;
 import java.util.*;
-//A improvement would be to figure out a way for all of the code to reference one array that gets refilled.
 public class MealGeneratorArrays {
     public Object[][] genArray(int days){
-        //create instances.
         FileIO fileIO = new FileIO();
-        Random random = new Random();
         //number of columns, using 7 because there are 7 days in a week.
         int numColumns = 7;
-        ArrayList<Object> mealArrayList = new ArrayList<>(Arrays.asList(fileIO.readAllObj()));
+
         Object[][] mealArrayFinal = new Object[(int)(Math.ceil(days / (double)numColumns))][numColumns];
         int j;
         for (j = 0; j < days / numColumns ;j++){
-
             for (int i = 0; i < numColumns; i++){
-                //put a random meal from the array list to the 2d array, removing it to avoid meal repetition.
-                int randIndex = random.nextInt(mealArrayList.size());
-                mealArrayFinal[j][i] = mealArrayList.remove(randIndex);
-                //check if arraylist is empty, if it is refill it.
-                if (mealArrayList.isEmpty()){
-                    mealArrayList = new ArrayList<>(Arrays.asList(fileIO.readAllObj()));
-                }
+                mealArrayFinal[j][i] = fileIO.returnRandomObj();
             }
         }
         //create last row of the 2d array.
@@ -30,11 +20,7 @@ public class MealGeneratorArrays {
             Arrays.fill(mealArrayFinal[mealArrayFinal.length - 1], 0);
             //days - (j * numColumns) is the remaining days that have not been covered by the main loop above.
             for (int i = 0; i < days - (j * numColumns); i++ ){
-                int randIndex = random.nextInt(mealArrayList.size());
-                mealArrayFinal[j][i] = mealArrayList.remove(randIndex);
-                if (mealArrayList.isEmpty()){
-                    mealArrayList = new ArrayList<>(Arrays.asList(fileIO.readAllObj()));
-                }
+                mealArrayFinal[j][i] = fileIO.returnRandomObj();
             }
         }
 
@@ -43,7 +29,6 @@ public class MealGeneratorArrays {
     public Object[][] genArray(int month, int year){
         //creating instances.
         FileIO fileIO = new FileIO();
-        Random random = new Random();
         LocalDate startOfMonth = LocalDate.of(year,month,1);
         //create starting variables.
         int dayOfWeek = startOfMonth.getDayOfWeek().getValue();
@@ -53,19 +38,12 @@ public class MealGeneratorArrays {
         //calculates number of rows needed for the array. dayOfWeek is added to account for the starting 0s.
         int numRows = (int)(Math.ceil(((startOfMonth.lengthOfMonth() + dayOfWeek) / 7.0)));
 
-        ArrayList<Object> mealArrayList = new ArrayList<>(Arrays.asList(fileIO.readAllObj()));
         //create the 2d array
         Object[][] mealMonth = new Object[numRows][7];
         //create first line of the 2d array putting 0s where the month has not started yet.
         Arrays.fill(mealMonth[0], 0);
         for (int i = dayOfWeek; i < 7; i++){
-            //put a random meal from the array list to the 2d array, removing it to avoid meal repetition.
-            int randIndex = random.nextInt(mealArrayList.size());
-            mealMonth[0][i] = mealArrayList.remove(randIndex);
-            //check if arraylist is empty, if it is refill it.
-            if (mealArrayList.isEmpty()){
-                mealArrayList = new ArrayList<>(Arrays.asList(fileIO.readAllObj()));
-            }
+            mealMonth[0][i] = fileIO.returnRandomObj();
         }
         //create 2d array for the remaining days
         Object[][] withoutStart = genArray(days);
