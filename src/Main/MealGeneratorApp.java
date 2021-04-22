@@ -1,6 +1,5 @@
 package Main;
 
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -34,11 +33,7 @@ public class MealGeneratorApp {
                 case 2:
                     System.out.print("Enter meal to remove from list: ");
                     meal = input.nextLine();
-                    try {
-                        System.out.println(fileIO.removeFromFile(meal));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    System.out.println(fileIO.removeFromFile(meal));
                     break;
                 case 3:
                     do {
@@ -46,12 +41,14 @@ public class MealGeneratorApp {
                         generatorMenu();
                         System.out.print("Selection: ");
                         subMenuSelection = Integer.parseInt(input.nextLine());
+                        System.out.println();
                         switch (subMenuSelection) {
                             case 1:
                                 System.out.print("Enter month as number (1-12) or string (January-December): ");
                                 strMonth = input.nextLine();
                                 System.out.print("Enter year: ");
                                 year = Integer.parseInt(input.nextLine());
+                                System.out.println();
                                 char[] chars = strMonth.toCharArray();
                                 for (char c : chars) {
                                     if (Character.isDigit(c)) {
@@ -59,43 +56,28 @@ public class MealGeneratorApp {
                                     }
                                 }
                                 if (!(intMonth > -1 && intMonth < 13)) {
-                                    System.out.println("Invalid Month!\n");
+                                    System.out.println("Invalid Month!");
                                     break;
                                 }
                                 if (intMonth != 0) {
                                     Object[][] mealPlanArray = mealGeneratorArrays.genArray(intMonth, year);
-                                    System.out.println(Arrays.deepToString(mealPlanArray).
-                                            replaceAll("], ", "\n").
-                                            replaceAll("\\[", "").
-                                            replaceAll("]]", "").
-                                            replaceAll("\\[", "").
-                                            replaceAll(", ", "\t"));
-                                    System.out.println();
+                                    printArray(mealPlanArray);
                                 } else if (strMonth.equals("0")) {
-                                    System.out.println("Invalid Month!\n");
+                                    System.out.println("Invalid Month!");
                                     break;
                                 } else {
                                     Object[][] mealPlanArray = mealGeneratorArrays.genArray(strMonth, year);
                                     if (mealPlanArray == null) {
                                         break;
                                     }
-                                    for (Object[] objects : mealPlanArray) {
-                                        System.out.println(Arrays.deepToString(objects));
-                                    }
+                                    printArray(mealPlanArray);
                                 }
-                                System.out.println();
                                 break;
                             case 2:
                                 System.out.print("Enter number of days for meal plan: ");
                                 days = Integer.parseInt(input.nextLine());
                                 Object[][] mealPlanArray = mealGeneratorArrays.genArray(days);
-                                System.out.println(Arrays.deepToString(mealPlanArray).
-                                        replaceAll("], ", "\n").
-                                        replaceAll("\\[", "").
-                                        replaceAll("]]", "").
-                                        replaceAll("\\[", "").
-                                        replaceAll(", ", "\t"));
-                                System.out.println();
+                                printArray(mealPlanArray);
                                 break;
                             case 0:
                                 break;
@@ -112,14 +94,13 @@ public class MealGeneratorApp {
                 case 0:
                     break;
                 default:
-                    System.out.println("Invalid input, select another value");
+                    System.out.println("\nInvalid input, select another value\n");
                     break;
             }
         } while (selection != 0);
 
     }
     private static void mainMenu() {
-        //TODO: create main menu
         System.out.println("Main Menu:");
         System.out.println("1 - Add meal to list");
         System.out.println("2 - Remove meal from list");
@@ -128,10 +109,20 @@ public class MealGeneratorApp {
         System.out.println("0 - Exit");
     }
     private static void generatorMenu(){
-        //TODO: create main menu
         System.out.println("Meal Plan Menu:");
         System.out.println("1 - Meal plan for whole month");
         System.out.println("2 - Meal plan for set number of days");
         System.out.println("0 - Exit to Main Menu");
+    }
+    private static void printArray(Object[][] mealPlanArray){
+        //method to print array in tab delimited format.
+        System.out.println();
+        System.out.println(Arrays.deepToString(mealPlanArray).
+                replaceAll("], ", "\n").
+                replaceAll("\\[", "").
+                replaceAll("]]", "").
+                replaceAll("\\[", "").
+                replaceAll(", ", "\t"));
+        System.out.println();
     }
 }
