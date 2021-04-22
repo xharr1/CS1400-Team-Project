@@ -65,34 +65,39 @@ public class FileIO {
 
     }
 
-    public String fileToString(String filePath) throws FileNotFoundException {
+    public String fileToString(String filePath) {
         String input;
-        Scanner scanner = new Scanner(new File(filePath));
-        StringBuilder sb = new StringBuilder();
-        while (scanner.hasNextLine())
-        {
-            input = scanner.nextLine();
-            if (scanner.hasNextLine())
-            {
-                sb.append(input).append("\n");
+        StringBuilder sb;
+        try (Scanner scanner = new Scanner(new File(filePath))) {
+            sb = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                input = scanner.nextLine();
+                if (scanner.hasNextLine()) {
+                    sb.append(input).append("\n");
+                } else {
+                    sb.append(input);
+                }
             }
-            else
-            {
-                sb.append(input);
-            }
+            return sb.toString();
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+            return null;
         }
-
-        return sb.toString();
     }
 
-    public String removeFromFile(String meal) throws FileNotFoundException {
+    public String removeFromFile(String meal){
         //Harrison 04/18/2021
 
         String mealFileText = fileToString(String.valueOf(filePath)).
                 replaceAll(meal + "\n", "").
                 replaceAll(meal,"").trim();
 
-        PrintWriter pw = new PrintWriter(String.valueOf(filePath));
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(String.valueOf(filePath));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         pw.append(mealFileText);
         pw.flush();
@@ -107,15 +112,13 @@ public class FileIO {
     public  Object readRandObj(){
         Object[] mealArray = readAllObj();
         Random random = new Random();
-        if (mealArray != null) {
-            int randIndex = random.nextInt(mealArray.length);
-            return mealArray[randIndex];
-        }
-        return null;
+        int randIndex = random.nextInt(mealArray.length);
+        return mealArray[randIndex];
     }
 
     public Object[] readAllObj() {
-
+        //method to read all items in the file.
+        //is it worth it to convert this to a array list?
         try{
             Stream<String> mealStream = Files.lines(filePath);
             return mealStream.toArray();
