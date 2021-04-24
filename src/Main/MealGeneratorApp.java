@@ -19,8 +19,11 @@ public class MealGeneratorApp {
         String meal;
         String strMonth;
         int intMonth = 0;
-        int year;
-        int days;
+        int year = 0;
+        int days = 0;
+        int week = 0;
+        int dayReplaceMeal = 0;
+        Object[][] mealPlanArray = new Object[0][];
         //if the meal file does not exist, create it.
         if (!Files.exists(fileIO.getFilePath())){
             try{
@@ -34,21 +37,26 @@ public class MealGeneratorApp {
             }
         }
         do {
+            //Creates main menu and gets selection from user
             mainMenu();
             System.out.print("Selection: ");
             selection = Integer.parseInt(input.nextLine());
             switch (selection)
             {
+                //Switch statement for main menu actions
+                //Adds meal to meal list
                 case 1:
                     System.out.print("Enter meal to add to list: ");
                     meal = input.nextLine();
                     System.out.print(fileIO.addToFile(meal));
                     break;
+                //Removes meal from meal list
                 case 2:
                     System.out.print("Enter meal to remove from list: ");
                     meal = input.nextLine();
                     System.out.println(fileIO.removeFromFile(meal));
                     break;
+                //Accesses sub menu switch statement for meal plan generation
                 case 3:
                     do {
                         System.out.println();
@@ -57,6 +65,7 @@ public class MealGeneratorApp {
                         subMenuSelection = Integer.parseInt(input.nextLine());
                         System.out.println();
                         switch (subMenuSelection) {
+                            //creates a month long meal plan
                             case 1:
                                 System.out.print("Enter month as number (1-12) or string (January-December): ");
                                 strMonth = input.nextLine();
@@ -74,23 +83,24 @@ public class MealGeneratorApp {
                                     break;
                                 }
                                 if (intMonth != 0) {
-                                    Object[][] mealPlanArray = mealGeneratorArrays.genArray(intMonth, year);
+                                    mealPlanArray = mealGeneratorArrays.genArray(intMonth, year);
                                     printArray(mealPlanArray);
                                 } else if (strMonth.equals("0")) {
                                     System.out.println("Invalid Month!");
                                     break;
                                 } else {
-                                    Object[][] mealPlanArray = mealGeneratorArrays.genArray(strMonth, year);
+                                    mealPlanArray = mealGeneratorArrays.genArray(strMonth, year);
                                     if (mealPlanArray == null) {
                                         break;
                                     }
                                     printArray(mealPlanArray);
                                 }
                                 break;
+                            //creates meal plan for set number if days
                             case 2:
                                 System.out.print("Enter number of days for meal plan: ");
                                 days = Integer.parseInt(input.nextLine());
-                                Object[][] mealPlanArray = mealGeneratorArrays.genArray(days);
+                                mealPlanArray = mealGeneratorArrays.genArray(days);
                                 printArray(mealPlanArray);
                                 break;
                             case 0:
@@ -102,11 +112,64 @@ public class MealGeneratorApp {
                     }
                     while (subMenuSelection != 0);
                     break;
+                //Prints all meals in meal list
                 case 4:
                     System.out.print(Arrays.deepToString(fileIO.readAllObj()) + "\n\n");
                     break;
+                //replaces a meal in a previously generated meal plan
                 case 5:
+                    //Checks if meal plan has been created by verifying meal plan generator values are not 0
+                    if (days != 0 || year != 0)
+                    {
+                        //Initial week input
+                        System.out.printf("\nWhat week (1-%d) would you like to replace a meal in: ", mealPlanArray.length);
+                        week = Integer.parseInt(input.nextLine());
 
+                        //If week is invalid, requests week again
+                        while (week > mealPlanArray.length || week == 0)
+                        {
+                            System.out.printf("\nInvalid value, please enter a week between 1 and %d. " +
+                                    "Enter a negative number to cancel.\n\n", mealPlanArray.length);
+                            System.out.printf("What week (1-%d) would you like to replace a meal in: ", mealPlanArray.length);
+                            week = Integer.parseInt(input.nextLine());
+                        }
+                        //Exits if week entered is negative
+                        if (week < 0)
+                        {
+                            break;
+                        }
+
+                        //Initial day input
+                        System.out.print("What day of the week (1-7) would you like to replace a meal in: ");
+                        dayReplaceMeal = Integer.parseInt(input.nextLine());
+
+                        //If day is invalid, requests day again
+                        while (dayReplaceMeal > 7 || dayReplaceMeal == 0)
+                        {
+                            System.out.println("\nInvalid value, please enter a day between 1 and 7. " +
+                                    "Enter a negative number to cancel.\n");
+                            System.out.print("What day of the week (1-7) would you like to replace a meal in: ");
+                            dayReplaceMeal = Integer.parseInt(input.nextLine());
+                        }
+
+                        //Exits if day entered is negative
+                        if (dayReplaceMeal < 0)
+                        {
+                            break;
+                        }
+
+                        //adjusts day/week entered for array input
+                        week--;
+                        dayReplaceMeal--;
+
+                        //Replaces meal and prints adjusted meal plan
+                        printArray(fileIO.replaceMeal(mealPlanArray, week, dayReplaceMeal));
+
+                    }
+                    else
+                    {
+                        System.out.println("\nPlease generate a meal plan before replacing a meal.\n");
+                    }
                     break;
                 case 0:
                     break;
@@ -123,6 +186,7 @@ public class MealGeneratorApp {
         System.out.println("2 - Remove meal from list");
         System.out.println("3 - Generate meal plan");
         System.out.println("4 - Print all meals in list");
+        System.out.println("5 - Replace meal in plan");
         System.out.println("0 - Exit");
     }
     private static void generatorMenu(){

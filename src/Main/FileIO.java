@@ -111,8 +111,9 @@ public class FileIO {
         return "Meal Removed from list\n\n";
     }
 
-    public Object[][] replaceMeal(Object[][] mealArray, String meal) {
-        return null;
+    public Object[][] replaceMeal(Object[][] mealArray, int week, int day) {
+        mealArray[week][day] = returnRandomObj();
+        return mealArray;
     }
 
     public Object[] readAllObj() {
