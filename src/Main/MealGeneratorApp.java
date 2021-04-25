@@ -9,7 +9,6 @@ package Main;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -27,8 +26,8 @@ public class MealGeneratorApp {
         int intMonth = 0;
         int year = 0;
         int days = 0;
-        int week = 0;
-        int dayReplaceMeal = 0;
+        int week;
+        int dayReplaceMeal;
         Object[][] mealPlanArray = new Object[0][];
         //if the meal file does not exist, create it.
         if (!Files.exists(fileIO.getFilePath())){

@@ -10,19 +10,17 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Stream;
-
 import java.io.*;
 
 public class FileIO {
 
-    private final String fileName = "MealsTest.txt";
+    private final String fileName = "Meals.txt";
+    private final Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
+    private static ArrayList<Object> mealArray = new ArrayList<>();
 
     public Path getFilePath() {
         return filePath;
     }
-
-    private final Path filePath =  Paths.get(System.getProperty("user.dir") + System.getProperty("file.separator") + fileName);
-    private static ArrayList<Object> mealArray = new ArrayList<>();
 
     public String addToFile(String meal){
         //Harrison 04/16/2021
@@ -43,7 +41,6 @@ public class FileIO {
         String mealLine;
         while ((reader != null && reader.hasNextLine()) && !mealInFile)
         {
-//            mealInFile = reader.nextLine().indexOf(meal) > 0;
             mealLine = reader.nextLine();
             if (mealLine.equals(meal))
             {
@@ -58,7 +55,6 @@ public class FileIO {
                 FileWriter writer = new FileWriter(String.valueOf(filePath), true);
                 writer.write("\n" + meal);
                 writer.close();
-
             }
             catch (IOException e)
             {
