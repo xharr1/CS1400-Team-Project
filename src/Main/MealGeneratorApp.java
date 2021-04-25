@@ -100,6 +100,17 @@ public class MealGeneratorApp {
                             case 2:
                                 System.out.print("Enter number of days for meal plan: ");
                                 days = Integer.parseInt(input.nextLine());
+                                while (days < 1)
+                                {
+                                    System.out.println("\nInvalid value, please enter a day greater than 1 " +
+                                            "Enter a negative number to cancel.\n");
+                                    System.out.print("Enter number of days for meal plan: ");
+                                    days = Integer.parseInt(input.nextLine());
+                                }
+                                if (days < 0)
+                                {
+                                    break;
+                                }
                                 mealPlanArray = mealGeneratorArrays.genArray(days);
                                 printArray(mealPlanArray);
                                 break;
