@@ -1,5 +1,11 @@
 package Main;
 
+/*
+ ** Authors: Eric Rytting & Harrison Plummer
+ ** 04/11/2021 - 04/25/2021
+ ** Assignment: A10 - Team Project - Meal Planner
+ */
+
 import java.time.LocalDate;
 import java.util.*;
 public class MealGeneratorArrays {
